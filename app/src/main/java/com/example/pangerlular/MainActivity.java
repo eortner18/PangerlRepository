@@ -13,5 +13,6 @@ public class MainActivity extends AppCompatActivity {
 
         DBManager db = new DBManager();
         db.writeToDatabase();
+        //t
     }
 }

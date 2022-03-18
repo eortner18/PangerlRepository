@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1067168722689",
+    "project_id": "pangerlulardb",
+    "storage_bucket": "pangerlulardb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1067168722689:android:37868477da057b2826b500",
+        "android_client_info": {
+          "package_name": "com.example.pangerlular"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1067168722689-thcmvhoha4uvd9l6k5k5tndmt4q3ectt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_0sHNlfXSZRkbqcbxtBU8ke79ElVaq2s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1067168722689-thcmvhoha4uvd9l6k5k5tndmt4q3ectt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

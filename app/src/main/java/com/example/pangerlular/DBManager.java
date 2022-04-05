@@ -1,16 +1,13 @@
 package com.example.pangerlular;
 
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class DBManager {
     FirebaseDatabase database = FirebaseDatabase.getInstance("https://pangerlulardb-default-rtdb.europe-west1.firebasedatabase.app/");
+
     DatabaseReference productReference = database.getReference("products");
     DatabaseReference customerReference = database.getReference("customers");
     List<Customer> customers = new ArrayList<>();
@@ -41,6 +38,7 @@ public class DBManager {
     public List<Customer> getCustomers() {
 
         return customers;
+
     }
 
     public void productsDatabaseListener(){

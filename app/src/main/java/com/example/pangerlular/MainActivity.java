@@ -13,6 +13,15 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.opencsv.CSVReader;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     ListView listView;
@@ -21,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         DBManager db = new DBManager();
+
         db.initProducts(readProductsFromCsv());
         listView = findViewById(R.id.listView);
 
@@ -35,13 +45,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private List<Product> readProductsFromCsv() {
+
         List<Product> products = new ArrayList<>();
         try {
             CSVReader reader = new CSVReader(new InputStreamReader(getResources().openRawResource(R.raw.products)));
             String[] nextLine;
             while((nextLine = reader.readNext()) != null)  {
                 nextLine = nextLine[0].split(";");
+
                 products.add( new Product( nextLine[0], nextLine[1], Double.parseDouble(nextLine[2]), nextLine[3]));
+
             }
 
         } catch (FileNotFoundException e) {

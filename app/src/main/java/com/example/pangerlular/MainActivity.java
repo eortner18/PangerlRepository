@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         DBManager db = new DBManager();
 
-        db.initProducts(readProductsFromCsv());
+        db.initProducts(new InputStreamReader(getResources().openRawResource(R.raw.products)));
         listView = findViewById(R.id.listView_products);
 
         db.addCustomer(new Customer(0, "Hans", "Peter", "hpeter", "12345", "h.@gmail", new Address("Erdbeerstrasse 2", 4070, "Eferding"), new Cart()));
@@ -39,31 +39,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         List<Customer> customers = db.getCustomers();
-        List<Product> products = readProductsFromCsv();
+        List<Product> products = db.getProducts();
 
 
     }
 
-    private List<Product> readProductsFromCsv() {
 
-        List<Product> products = new ArrayList<>();
-        try {
-            CSVReader reader = new CSVReader(new InputStreamReader(getResources().openRawResource(R.raw.products)));
-            String[] nextLine;
-            while((nextLine = reader.readNext()) != null)  {
-                nextLine = nextLine[0].split(";");
-
-                products.add( new Product( nextLine[0], nextLine[1], Double.parseDouble(nextLine[2]), nextLine[3]));
-
-            }
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            System.out.println("File Not Found");
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("IO Exception");
-        }
-        return products;
-    }
 }

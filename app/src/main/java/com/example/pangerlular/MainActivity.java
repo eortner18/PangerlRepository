@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import com.opencsv.CSVReader;
 
@@ -36,8 +37,10 @@ public class MainActivity extends AppCompatActivity {
         db.initProducts(new InputStreamReader(getResources().openRawResource(R.raw.products)));
         listView = findViewById(R.id.ListViewProducts);
 
+
         db.addCustomer(new Customer(0, "Hans", "Peter", "hpeter", "12345", "h.@gmail", new Address("Erdbeerstrasse 2", 4070, "Eferding"), new Cart()));
         db.addCustomer(new Customer(1, "Franz", "Kunsti", "fkunsti", "12345", "f.@gmail", new Address("Erdbeerstrasse 2", 4070, "Eferding"), new Cart()));
+
 
 
         List<Customer> customers = db.getCustomers();
@@ -53,6 +56,24 @@ public class MainActivity extends AppCompatActivity {
         listView.setAdapter(arrayAdapter);
 
 
+        searchViewListener();
+    }
+
+    public void searchViewListener(){
+        SearchView searchView  = findViewById(R.id.searchBarSearch);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                arrayAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
     }
 
 

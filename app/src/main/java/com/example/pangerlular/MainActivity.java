@@ -3,15 +3,20 @@ package com.example.pangerlular;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Spinner;
 
+import com.google.android.material.navigation.NavigationBarView;
 import com.opencsv.CSVReader;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         DBManager db = new DBManager();
+
+        setUpSpinner();
 
         db.initProducts(new InputStreamReader(getResources().openRawResource(R.raw.products)));
         listView = findViewById(R.id.ListViewProducts);
@@ -57,6 +64,29 @@ public class MainActivity extends AppCompatActivity {
 
 
         searchViewListener();
+    }
+
+    private void setUpSpinner()
+    {
+        Spinner catSpinner= findViewById(R.id.spinner);
+        ArrayAdapter<CharSequence> catAdapter = ArrayAdapter.createFromResource(this, R.array.category_array, android.R.layout.simple_spinner_item);
+        catAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        catSpinner.setAdapter(catAdapter);
+
+        catSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
+            {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView)
+            {
+
+            }
+        });
     }
 
     public void searchViewListener(){

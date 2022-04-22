@@ -85,7 +85,7 @@
                 android:layout_width="237dp"
                 android:layout_height="48dp"
                 android:layout_weight="1"
-                android:contentDescription="CategorySlider"
+                android:contentDescription="CategorySpinner"
                 android:dropDownWidth="wrap_content"
                 android:textAlignment="viewEnd"
                 tools:ignore="SpeakableTextPresentCheck" />

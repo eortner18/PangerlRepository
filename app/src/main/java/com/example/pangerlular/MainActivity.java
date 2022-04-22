@@ -3,14 +3,20 @@ package com.example.pangerlular;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.Spinner;
 
+import com.google.android.material.navigation.NavigationBarView;
 import com.opencsv.CSVReader;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,11 +39,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         DBManager db = new DBManager();
 
+        setUpSpinner();
+
         db.initProducts(new InputStreamReader(getResources().openRawResource(R.raw.products)));
         listView = findViewById(R.id.ListViewProducts);
 
+
         db.addCustomer(new Customer(0, "Hans", "Peter", "hpeter", "12345", "h.@gmail", new Address("Erdbeerstrasse 2", 4070, "Eferding"), new Cart()));
         db.addCustomer(new Customer(1, "Franz", "Kunsti", "fkunsti", "12345", "f.@gmail", new Address("Erdbeerstrasse 2", 4070, "Eferding"), new Cart()));
+
 
 
         List<Customer> customers = db.getCustomers();
@@ -53,6 +63,47 @@ public class MainActivity extends AppCompatActivity {
         listView.setAdapter(arrayAdapter);
 
 
+        searchViewListener();
+    }
+
+    private void setUpSpinner()
+    {
+        Spinner catSpinner= findViewById(R.id.spinner);
+        ArrayAdapter<CharSequence> catAdapter = ArrayAdapter.createFromResource(this, R.array.category_array, android.R.layout.simple_spinner_item);
+        catAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        catSpinner.setAdapter(catAdapter);
+
+        catSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
+            {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView)
+            {
+
+            }
+        });
+    }
+
+    public void searchViewListener(){
+        SearchView searchView  = findViewById(R.id.searchBarSearch);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                arrayAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
     }
 
 

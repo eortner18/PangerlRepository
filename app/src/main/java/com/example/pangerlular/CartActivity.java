@@ -42,8 +42,8 @@ public class CartActivity extends AppCompatActivity {
         //just for testing reasons
         //real currentUser will be implemented soon
         Cart testCart = new Cart();
-        testCart.addProduct(new Product("Kacke",  "FRUIT",12.0, ""));
-        testCart.addProduct(new Product("Pisse",  "FRUIT",100.0, ""));
+        testCart.addProduct(new CartProduct(3, new Product( "Kacke",  "FRUIT",12.0, "")));
+        testCart.addProduct(new CartProduct(5,new Product("Pisse",  "FRUIT",100.0, "")));
         currentUser = new Customer(0, "Hans", "Peter", "hpeter", "12345", "elias.reiter2nd@gmail.com", new Address("Erdbeerstrasse 2", 4070, "Eferding"), testCart);
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -58,7 +58,7 @@ public class CartActivity extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
     }
 
-    protected void sendEmail(List<Product> orderedProducts, Customer customer) {
+    protected void sendEmail(List<CartProduct> orderedProducts, Customer customer) {
         Log.i("Send email", "");
 
         final String username= "pangerl.orders@gmail.com";
@@ -86,10 +86,10 @@ public class CartActivity extends AppCompatActivity {
                     .append("<center>Inhalt der Bestellung</center><br/>")
                     .append("<p><b><font>Bestellnummer xxxx</font></b></p>");
             double sum = 0;
-            for (Product product:
+            for (CartProduct product:
                  orderedProducts) {
-                sum+= product.getPrice();
-                    builder.append("<div>" + "Platzhalter Stücke &emsp;&emsp;&emsp;" +product.getName() +  "&emsp;&emsp;&emsp;"+product.getPrice() +"</div>");
+                sum+= product.getProduct().getPrice();
+                    builder.append("<div>" +product.getAmount() +"x &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;" +product.getProduct().getName() +  "&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;"+product.getProduct().getPrice() +"</div>");
             }
             builder.append("<br/><p><b>Zahlungsmethode</b><br/>");
             builder.append("Bar vor Ort</p><br/>");

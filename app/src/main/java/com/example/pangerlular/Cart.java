@@ -1,5 +1,6 @@
 package com.example.pangerlular;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Cart {
@@ -12,6 +13,7 @@ public class Cart {
     }
 
     public Cart() {
+        this.cartProducts = new ArrayList<>();
     }
 
     public int getId() {

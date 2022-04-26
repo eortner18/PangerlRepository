@@ -2,10 +2,13 @@ package com.example.pangerlular;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Spinner;
@@ -39,8 +42,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         DBManager db = new DBManager();
 
-        setUpSpinner();
-
         db.initProducts(new InputStreamReader(getResources().openRawResource(R.raw.products)));
         listView = findViewById(R.id.ListViewProducts);
 
@@ -64,6 +65,16 @@ public class MainActivity extends AppCompatActivity {
 
 
         searchViewListener();
+
+        ImageButton cartButton = findViewById(R.id.ShoppingCartImageButton);
+        cartButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                startCartActivity(view);
+            }
+        });
+
     }
 
     private void setUpSpinner()
@@ -104,6 +115,12 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    public void startCartActivity(View view) {
+        Intent intent = new Intent(this, CartActivity.class);
+        intent.putExtra("TestName", "TestValue");
+        startActivity(intent);
     }
 
 

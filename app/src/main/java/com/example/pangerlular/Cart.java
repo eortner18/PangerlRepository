@@ -1,17 +1,19 @@
 package com.example.pangerlular;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Cart {
     private int id;
-    private List<Product> cartProducts;
+    private List<CartProduct> cartProducts;
 
-    public Cart(int id, List<Product> cartProducts) {
+    public Cart(int id, List<CartProduct> cartProducts) {
         this.id = id;
         this.cartProducts = cartProducts;
     }
 
     public Cart() {
+        this.cartProducts = new ArrayList<>();
     }
 
     public int getId() {
@@ -22,26 +24,26 @@ public class Cart {
         this.id = id;
     }
 
-    public List<Product> getCartProducts() {
+    public List<CartProduct> getCartProducts() {
         return cartProducts;
     }
 
-    public void setCartProducts(List<Product> cartProducts) {
+    public void setCartProducts(List<CartProduct> cartProducts) {
         this.cartProducts = cartProducts;
     }
 
-    public void addProduct(Product product){
+    public void addProduct(CartProduct product){
         cartProducts.add(product);
     }
 
-    public void removeProduct(Product product){
+    public void removeProduct(CartProduct product){
         cartProducts.remove(product);
     }
 
-    public Product findProductWithName(String productName){
-        for (Product item :
+    public CartProduct findProductWithName(String productName){
+        for (CartProduct item :
                 cartProducts) {
-            if(item.getName().toLowerCase().contains(productName.toLowerCase())){
+            if(item.getProduct().getName().toLowerCase().contains(productName.toLowerCase())){
                 return item;
             }
         }

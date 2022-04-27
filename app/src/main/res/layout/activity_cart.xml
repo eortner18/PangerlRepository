@@ -16,9 +16,10 @@
 
         <TextView
             android:id="@+id/PangerlTextView"
-            android:layout_width="47dp"
+            android:layout_width="100dp"
             android:layout_height="53dp"
             android:layout_weight="1"
+            android:background="#FFFFFF"
             android:gravity="center"
             android:text="Pangerl-Shop"
             android:textAlignment="center"
@@ -37,6 +38,7 @@
             android:layout_width="25dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="#FFFFFF"
             app:srcCompat="@drawable/shopping_cart_klein_klein"
             tools:ignore="SpeakableTextPresentCheck" />
 
@@ -45,6 +47,7 @@
             android:layout_width="25dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="#FFFFFF"
             app:srcCompat="@android:drawable/ic_menu_manage"
             tools:ignore="SpeakableTextPresentCheck" />
 
@@ -86,13 +89,6 @@
             android:layout_weight="1"
             android:text="TextView" />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
         <Button
             android:id="@+id/buttonId"
             android:layout_width="272dp"
@@ -100,6 +96,14 @@
             android:layout_gravity="center_horizontal|center_vertical"
             android:gravity="center"
             android:text="Bestellen" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
     </LinearLayout>
 
 </LinearLayout>

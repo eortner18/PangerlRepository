@@ -27,13 +27,12 @@
             android:textDirection="locale" />
 
 
-
         <ImageButton
             android:id="@+id/ShoppingCartImageButton"
             android:layout_width="25dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            app:srcCompat="@drawable/common_google_signin_btn_icon_dark_normal"
+            app:srcCompat="@drawable/shopping_cart_klein_klein"
             tools:ignore="SpeakableTextPresentCheck" />
 
         <ImageButton
@@ -41,7 +40,7 @@
             android:layout_width="25dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            app:srcCompat="@drawable/common_google_signin_btn_icon_dark"
+            app:srcCompat="@android:drawable/ic_menu_manage"
             tools:ignore="SpeakableTextPresentCheck" />
 
     </LinearLayout>

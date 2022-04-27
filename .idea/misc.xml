@@ -3,8 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-
+        <entry key="..\:/Users/elias/AndroidStudioProjects/Pangerlular/app/src/main/res/layout/activity_cart.xml" value="0.3625" />
+        <entry key="..\:/Users/elias/AndroidStudioProjects/Pangerlular/app/src/main/res/layout/activity_loginscreen.xml" value="0.3625" />
         <entry key="..\:/Users/elias/AndroidStudioProjects/Pangerlular/app/src/main/res/layout/activity_main.xml" value="0.2866847826086957" />
+        <entry key="..\:/Users/elias/AndroidStudioProjects/Pangerlular/app/src/main/res/layout/activity_product_detail.xml" value="0.3625" />
+        <entry key="..\:/Users/elias/AndroidStudioProjects/Pangerlular/app/src/main/res/layout/activity_register.xml" value="0.3484375" />
         <entry key="..\:/Users/elias/AndroidStudioProjects/Pangerlular/app/src/main/res/layout/listview_item.xml" value="0.33" />
         <entry key="..\:/Users/elias/AndroidStudioProjects/Pangerlular/app/src/main/res/layout/test_activity.xml" value="0.2866847826086957" />
       </map>

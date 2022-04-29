@@ -12,6 +12,10 @@ public class CartProduct {
 
     }
 
+    public CartProduct(){
+
+    }
+
     public int getAmount() {
         return amount;
     }

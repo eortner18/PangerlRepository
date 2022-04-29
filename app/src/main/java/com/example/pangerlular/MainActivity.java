@@ -49,14 +49,7 @@ public class MainActivity extends AppCompatActivity {
         listView = findViewById(R.id.ListViewProducts);
 
 
-        db.addCustomer(new Customer(0, "Hans", "Peter",  "12345", "h.@gmail", new Address("Erdbeerstrasse 2", 4070, "Eferding"), new Cart()));
-        db.addCustomer(new Customer(1, "Franz", "Kunsti",  "12345", "f.@gmail", new Address("Erdbeerstrasse 2", 4070, "Eferding"), new Cart()));
-
-
-
-        List<Customer> customers = db.getCustomers();
         List<Product> products = db.getProducts();
-
 
 
 

@@ -30,6 +30,7 @@ public class CartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
+        DBManager db = new DBManager();
 
         ListView cartProductsListView = findViewById(R.id.cartProductsView);
         Button button = findViewById(R.id.buttonId);
@@ -39,6 +40,8 @@ public class CartActivity extends AppCompatActivity {
 
         currentCustomer.getCart().addProduct(new CartProduct(3, new Product( "TestProduct1",  "FRUIT",12.0, "")));
         currentCustomer.getCart().addProduct(new CartProduct(5,new Product("Product2",  "FRUIT",100.0, "")));
+
+        db.addCustomer(currentCustomer);
 
         //endregion
 

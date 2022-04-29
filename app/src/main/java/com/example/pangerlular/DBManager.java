@@ -65,6 +65,7 @@ public class DBManager {
         customerReference.setValue(customers);
     }
 
+
     public List<Customer> getCustomers() {
 
         return customers;
@@ -91,7 +92,6 @@ public class DBManager {
         customerReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                System.err.println("ListenerCustomer");
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     customers.add(postSnapshot.getValue(Customer.class));
 

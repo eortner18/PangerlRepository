@@ -41,23 +41,47 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try {
-
+                    boolean validInputs = true;
 
                     if (password.getText().toString().equals("")){
-                        Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_LONG).show();
-                        password.setTextColor(Color.RED);
-                        return;
+                        password.setHintTextColor(Color.RED);
+                        validInputs = false;
+                    }if(vorname.getText().toString().equals("")){
+                        vorname.setHintTextColor(Color.RED);
+                        validInputs = false;
+                    } if(nachname.getText().toString().equals("")){
+                        nachname.setHintTextColor(Color.RED);
+                        validInputs = false;
+                    } if(email.getText().toString().equals("")){
+                        email.setHintTextColor(Color.RED);
+                        validInputs = false;
+                    } if(strasse.getText().toString().equals("")){
+
+                        strasse.setHintTextColor(Color.RED);
+                        validInputs = false;
+                    }if(plz.getText().toString().equals("")){
+
+                        plz.setHintTextColor(Color.RED);
+                        validInputs = false;
+                    } if(ort.getText().toString().equals("")){
+
+                        ort.setHintTextColor(Color.RED);
+                        validInputs = false;
                     }
-                    int lastCustomerId = getLastCustomerId();
-                    String passwordHash = hash(password.getText().toString());
 
+                    if(validInputs) {
+                        int lastCustomerId = getLastCustomerId();
+                        String passwordHash = hash(password.getText().toString());
 
-                    db.addCustomer(new Customer(lastCustomerId, vorname.getText().toString(), nachname.getText().toString(), passwordHash, email.getText().toString(),
-                            new Address(strasse.getText().toString(), Integer.parseInt(plz.getText().toString()), ort.getText().toString()), new Cart()));
-                    Toast.makeText(getApplicationContext(), "Registered successful", Toast.LENGTH_LONG).show();
-                    startLoginActivity(view);
+                        db.addCustomer(new Customer(lastCustomerId, vorname.getText().toString(), nachname.getText().toString(), passwordHash, email.getText().toString(),
+                                new Address(strasse.getText().toString(), Integer.parseInt(plz.getText().toString()), ort.getText().toString()), new Cart()));
+                        Toast.makeText(getApplicationContext(), "Registered successful", Toast.LENGTH_LONG).show();
+                        startLoginActivity(view);
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Missing inputs", Toast.LENGTH_LONG).show();
+                    }
                 }catch (NumberFormatException ex){
-                    Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Wrong input for PLZ", Toast.LENGTH_LONG).show();
                     plz.setTextColor(Color.RED);
                 }
 

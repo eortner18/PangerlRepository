@@ -12,14 +12,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Pangerlular">
         <activity
+            android:name=".SettingsActivity"
+            android:parentActivityName=".MainActivity"
+            android:exported="false"
+            android:label="@string/title_activity_settings" />
+        <activity
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
+            android:parentActivityName=".MainActivity"
             android:exported="false" />
-
         <activity
             android:name=".CartActivity"
+            android:parentActivityName=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"

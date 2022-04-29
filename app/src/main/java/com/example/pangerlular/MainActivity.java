@@ -124,4 +124,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void btnSettings_OnClick(View view) {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+
+    }
 }

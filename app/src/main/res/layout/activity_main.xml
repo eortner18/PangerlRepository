@@ -50,11 +50,12 @@
             tools:ignore="SpeakableTextPresentCheck" />
 
         <ImageButton
-            android:id="@+id/SettingsImageButton"
+            android:id="@+id/btnSettings"
             android:layout_width="25dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#FFFFFF"
+            android:onClick="btnSettings_OnClick"
             android:src="@android:drawable/ic_menu_manage"
             tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck,ImageContrastCheck" />
 

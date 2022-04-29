@@ -1,5 +1,6 @@
 package com.example.pangerlular;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -34,7 +35,8 @@ public class CartActivity extends AppCompatActivity {
 
         ListView cartProductsListView = findViewById(R.id.cartProductsView);
         Button button = findViewById(R.id.buttonId);
-
+        ActionBar actionBar = getSupportActionBar();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //region Objects for testing
 

@@ -66,8 +66,6 @@ public class DBManager {
 
     public List<Customer> getCustomers() {
         Customer customer = new Customer();
-        customers.add(customer);
-        customers.remove(customer);
         return customers;
 
     }

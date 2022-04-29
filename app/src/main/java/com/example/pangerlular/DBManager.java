@@ -54,8 +54,6 @@ public class DBManager {
     }
 
     public List<Product> getProducts() {
-
-
         return products;
     }
 
@@ -67,7 +65,9 @@ public class DBManager {
 
 
     public List<Customer> getCustomers() {
-
+        Customer customer = new Customer();
+        customers.add(customer);
+        customers.remove(customer);
         return customers;
 
     }
@@ -92,6 +92,7 @@ public class DBManager {
         customerReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                customers = new ArrayList<>();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     customers.add(postSnapshot.getValue(Customer.class));
 

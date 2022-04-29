@@ -52,16 +52,18 @@ public class MainActivity extends AppCompatActivity {
         List<Product> products = db.getProducts();
 
 
-
         List<String> productsViewList = new ArrayList<>();
         for (Product product :
                 products) {
             productsViewList.add(product.getName());
         }
 
+
+        //setUpSpinner();
+
+
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,productsViewList);
         listView.setAdapter(arrayAdapter);
-
 
         searchViewListener();
 

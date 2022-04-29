@@ -19,6 +19,9 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.InputMismatchException;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+
 public class RegisterActivity extends AppCompatActivity {
 
     DBManager db = new DBManager();
@@ -43,27 +46,32 @@ public class RegisterActivity extends AppCompatActivity {
                 try {
                     boolean validInputs = true;
 
-                    if (password.getText().toString().equals("")){
+                    if(password.getText().toString().equals("")){
                         password.setHintTextColor(Color.RED);
                         validInputs = false;
-                    }if(vorname.getText().toString().equals("")){
+                    }
+                    if(vorname.getText().toString().equals("")){
                         vorname.setHintTextColor(Color.RED);
                         validInputs = false;
-                    } if(nachname.getText().toString().equals("")){
+                    }
+                    if(nachname.getText().toString().equals("")){
                         nachname.setHintTextColor(Color.RED);
                         validInputs = false;
-                    } if(email.getText().toString().equals("")){
+                    }
+                    if(email.getText().toString().equals("") && isValidEmailAddress(email.getText().toString())){
                         email.setHintTextColor(Color.RED);
                         validInputs = false;
-                    } if(strasse.getText().toString().equals("")){
-
+                    }
+                    if(strasse.getText().toString().equals("")){
                         strasse.setHintTextColor(Color.RED);
                         validInputs = false;
-                    }if(plz.getText().toString().equals("")){
+                    }
+                    if(plz.getText().toString().equals("")){
 
                         plz.setHintTextColor(Color.RED);
                         validInputs = false;
-                    } if(ort.getText().toString().equals("")){
+                    }
+                    if(ort.getText().toString().equals("")){
 
                         ort.setHintTextColor(Color.RED);
                         validInputs = false;
@@ -90,6 +98,8 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     }
+
+
 
     public void startLoginActivity(View view) {
         Intent intent = new Intent(this, LoginActivity.class);
@@ -121,5 +131,12 @@ public class RegisterActivity extends AppCompatActivity {
         return hashString;
     }
 
+
+    public boolean isValidEmailAddress(String email) {
+        String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+        java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
+        java.util.regex.Matcher m = p.matcher(email);
+        return m.matches();
+    }
 
 }

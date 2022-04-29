@@ -1,22 +1,15 @@
 package com.example.pangerlular;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.text.Html;
-import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -31,29 +24,30 @@ import javax.mail.internet.MimeMessage;
 public class CartActivity extends AppCompatActivity {
 
 
-    Customer currentUser;
+    Customer currentCustomer = LoginActivity.currentCustomer;
     ListView listView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-        ListView cartPorductsListView = findViewById(R.id.cartProductsView);
+        ListView cartProductsListView = findViewById(R.id.cartProductsView);
         Button button = findViewById(R.id.buttonId);
 
 
         //region Objects for testing
-        Cart testCart = new Cart();
-        testCart.addProduct(new CartProduct(3, new Product( "TestProduct1",  "FRUIT",12.0, "")));
-        testCart.addProduct(new CartProduct(5,new Product("Product2",  "FRUIT",100.0, "")));
-        currentUser = new Customer(0, "Hans", "Peter", "hpeter", "12345", "elias.reiter2nd@gmail.com", new Address("Erdbeerstrasse 2", 4070, "Eferding"), testCart);
+
+        currentCustomer.getCart().addProduct(new CartProduct(3, new Product( "TestProduct1",  "FRUIT",12.0, "")));
+        currentCustomer.getCart().addProduct(new CartProduct(5,new Product("Product2",  "FRUIT",100.0, "")));
+
         //endregion
+
 
         button.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                sendEmail(currentUser.getCart().getCartProducts(), currentUser);
+                sendEmail(currentCustomer.getCart().getCartProducts(), currentCustomer);
 
             }
         });
@@ -112,11 +106,11 @@ public class CartActivity extends AppCompatActivity {
 
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(username));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(currentUser.getMail()));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(currentCustomer.getMail()));
             message.setSubject("Your Order was successful");
             message.setContent(sendingText, "text/html");
             Transport.send(message);
-            Toast.makeText(getApplicationContext(), "email sent successfully",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Email sent successfully",Toast.LENGTH_LONG).show();
         }catch(MessagingException e){
             throw new RuntimeException(e);
         }

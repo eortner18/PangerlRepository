@@ -7,18 +7,18 @@ public class Customer {
     private int id;
     private String firstname;
     private String lastname;
-    private String username;
+
     private String password;
     private String mail;
     private Address address;
     private Cart cart;
     private boolean isAdmin;
 
-    public Customer(int id, String firstname, String lastname, String username, String password, String mail, Address address, Cart cart) {
+    public Customer(int id, String firstname, String lastname,  String password, String mail, Address address, Cart cart) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
-        this.username = username;
+
         this.password = password;
         this.mail = mail;
         this.address = address;
@@ -53,13 +53,6 @@ public class Customer {
         this.lastname = lastname;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public String getPassword() {
         return password;
@@ -120,7 +113,6 @@ public class Customer {
                 "id=" + id +
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
-                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", mail='" + mail + '\'' +
                 ", address=" + address +

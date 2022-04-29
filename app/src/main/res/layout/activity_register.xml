@@ -6,4 +6,98 @@
     android:layout_height="match_parent"
     tools:context=".RegisterActivity">
 
+    <EditText
+        android:id="@+id/txt_vorname"
+        android:layout_width="143dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="31dp"
+        android:layout_marginTop="37dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="vorname"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/txt_nachname"
+        android:layout_width="181dp"
+        android:layout_height="63dp"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="30dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="nachname"
+        app:layout_constraintStart_toEndOf="@+id/txt_vorname"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/txt_strasse"
+        android:layout_width="216dp"
+        android:layout_height="66dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="19dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="strasse"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_nachname" />
+
+    <EditText
+        android:id="@+id/txt_plz"
+        android:layout_width="125dp"
+        android:layout_height="67dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="19dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="plz"
+        app:layout_constraintStart_toEndOf="@+id/txt_strasse"
+        app:layout_constraintTop_toBottomOf="@+id/txt_nachname" />
+
+    <EditText
+        android:id="@+id/txt_ort"
+        android:layout_width="219dp"
+        android:layout_height="67dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="13dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="ort"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_strasse" />
+
+    <EditText
+        android:id="@+id/txt_email"
+        android:layout_width="214dp"
+        android:layout_height="77dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="11dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="email"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_ort" />
+
+    <EditText
+        android:id="@+id/txt_password"
+        android:layout_width="235dp"
+        android:layout_height="69dp"
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="numberPassword"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_email"
+        tools:text="password" />
+
+    <Button
+        android:id="@+id/btn_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="37dp"
+        android:layout_marginTop="21dp"
+        android:text="Register"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_password" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

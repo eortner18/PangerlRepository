@@ -3,14 +3,17 @@ package com.example.pangerlular;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Spinner;
@@ -35,9 +38,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
     ListView listView;
-    ArrayAdapter<String> arrayAdapter;
+    ProductAdapter proAdapter;
+    private ArrayList<Product> products;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,22 +51,25 @@ public class MainActivity extends AppCompatActivity {
         db.initProducts(new InputStreamReader(getResources().openRawResource(R.raw.products)));
         listView = findViewById(R.id.ListViewProducts);
 
-
-        List<Product> products = db.getProducts();
-
-
-        List<String> productsViewList = new ArrayList<>();
+        products = new ArrayList<>(db.getProducts());
+        /*List<String> productsViewList = new ArrayList<>();
         for (Product product :
                 products) {
             productsViewList.add(product.getName());
-        }
+        }*/
 
 
         //setUpSpinner();
 
 
-        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,productsViewList);
-        listView.setAdapter(arrayAdapter);
+        //arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,productsViewList);
+        //listView.setAdapter(arrayAdapter);
+
+        //instantiate adapter
+        //https://www.youtube.com/watch?v=k7KhHM3fCik&ab_channel=roottech
+        proAdapter = new ProductAdapter(getApplicationContext(), R.layout.list_item, products);
+        listView.setAdapter(proAdapter);
+
 
         searchViewListener();
 
@@ -112,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                arrayAdapter.getFilter().filter(newText);
+                //arrayAdapter.getFilter().filter(newText);
                 return false;
             }
         });

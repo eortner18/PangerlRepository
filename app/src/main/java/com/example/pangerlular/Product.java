@@ -7,14 +7,12 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class Product {
 
-
     private String name;
     private String type;
     private double price;
     private String productImageURL;
 
     public Product( String name, String type, double price, String productImageURL) {
-
         this.name = name;
         this.type = type;
         this.price = price;

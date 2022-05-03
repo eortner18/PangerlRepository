@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         }*/
 
 
-        //setUpSpinner();
+
 
 
         //arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,productsViewList);
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         proAdapter = new ProductAdapter(getApplicationContext(), R.layout.list_item, products);
         listView.setAdapter(proAdapter);
 
-
+        setUpSpinner();
         searchViewListener();
 
         ImageButton cartButton = findViewById(R.id.ShoppingCartImageButton);
@@ -95,7 +95,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
             {
-
+                    String category = (String) catSpinner.getSelectedItem();
+                    proAdapter.filterCategory(category);
             }
 
             @Override

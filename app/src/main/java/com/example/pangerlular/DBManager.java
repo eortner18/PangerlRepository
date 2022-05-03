@@ -74,6 +74,7 @@ public class DBManager {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     products.add(postSnapshot.getValue(Product.class));
+                    System.out.println("Product Listener triggered");
                 }
             }
 
@@ -91,7 +92,7 @@ public class DBManager {
                 customers = new ArrayList<>();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     customers.add(postSnapshot.getValue(Customer.class));
-
+                    System.out.println("Customer Listener triggered");
                 }
             }
 

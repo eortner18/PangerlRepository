@@ -25,6 +25,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 public class ProductAdapter extends ArrayAdapter<Product>
@@ -126,5 +127,20 @@ public class ProductAdapter extends ArrayAdapter<Product>
             }
         };
 
+    }
+
+    public void filterCategory(String category) {
+        productList = arraylist;
+        List<Product> filtered = new ArrayList<>();
+        if(!category.equals("Any")){
+            for (Product product :
+                    productList) {
+                if((product.getType()).equalsIgnoreCase(category)){
+                    filtered.add(product);
+                }
+            }
+            productList = filtered;
+        }
+        notifyDataSetChanged();
     }
 }

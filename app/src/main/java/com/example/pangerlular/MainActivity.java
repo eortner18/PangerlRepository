@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
         //listView.setAdapter(arrayAdapter);
 
         //instantiate adapter
-        //https://www.youtube.com/watch?v=k7KhHM3fCik&ab_channel=roottech
         proAdapter = new ProductAdapter(getApplicationContext(), R.layout.list_item, products);
         listView.setAdapter(proAdapter);
 
@@ -116,9 +115,10 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public boolean onQueryTextChange(String newText) {
-                //arrayAdapter.getFilter().filter(newText);
+                proAdapter.getFilter().filter(newText);
                 return false;
             }
         });

@@ -65,9 +65,7 @@ public class DBManager {
 
 
     public List<Customer> getCustomers() {
-        Customer customer = new Customer();
         return customers;
-
     }
 
     public void productsDatabaseListener(){

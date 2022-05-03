@@ -4,32 +4,54 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProductAdapter extends ArrayAdapter<Product>
 {
-    private ArrayList<Product> productList;
-
-    public ProductAdapter(@NonNull Context context, int resource, ArrayList<Product> productList)
+    private List<Product> productList;
+    private List<Product> arraylist;
+    private  Context context;
+    public ProductAdapter(@NonNull Context context, int resource, List<Product> productList)
     {
         super(context, resource, productList);
         this.productList = productList;
+        this.arraylist = new ArrayList<>();
+        this.arraylist.addAll(productList);
+        this.context = context;
     }
+
+    @Override
+    public int getCount() {
+        return productList.size();
+    }
+
+    @Override
+    public Product getItem(int position) {
+        return productList.get(position);
+    }
+
+
 
     @NonNull
     @Override
@@ -42,13 +64,67 @@ public class ProductAdapter extends ArrayAdapter<Product>
 
         ImageView productImage = convertView.findViewById(R.id.product_imageview);
         TextView titleTextView = convertView.findViewById(R.id.name_textview);
+            //set Image Resource
+            new DownloadImageTask(productList.get(position).getProductImageURL(), convertView).start();
 
-        //set Image Resource
-        new DownloadImageTask(productList.get(position).getProductImageURL(), convertView).start();
+            //set Text
+            titleTextView.setText(productList.get(position).getName());
 
-        //set Text
-        titleTextView.setText(productList.get(position).getName());
 
         return convertView;
+    }
+
+    @Override
+    public Filter getFilter() {
+
+        //https://gist.github.com/tobiasschuerg/3554252
+        return new Filter() {
+
+            @SuppressWarnings("unchecked")
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                productList = (ArrayList<Product>) results.values;
+                notifyDataSetChanged();
+                clear();
+                for (int i = 0, l = productList.size(); i < l; i++) {
+                    add((Product) productList.get(i));
+                }
+                notifyDataSetInvalidated();
+            }
+
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                productList= arraylist;
+                FilterResults result = new FilterResults();
+                List<Product> filteredArray = new ArrayList<Product>();
+
+
+
+                // perform your search here using the searchConstraint String.
+
+                constraint = constraint.toString().toLowerCase();
+                if (constraint != null && constraint.length() > 0) {
+                    for (int i = 0; i < productList.size(); i++) {
+                        String dataName = productList.get(i).getName();
+                        if (dataName.toLowerCase().startsWith(constraint.toString())) {
+                            filteredArray.add(productList.get(i));
+                        }
+                    }
+                    result.values = filteredArray;
+                    result.count = filteredArray.size();
+                }else{
+
+                        result.values = productList;
+                        result.count = productList.size();
+
+                }
+
+
+                Log.e("VALUES", result.values.toString());
+
+                return result;
+            }
+        };
+
     }
 }

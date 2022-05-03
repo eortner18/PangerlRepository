@@ -51,19 +51,8 @@ public class MainActivity extends AppCompatActivity {
         db.initProducts(new InputStreamReader(getResources().openRawResource(R.raw.products)));
         listView = findViewById(R.id.ListViewProducts);
 
-        products = new ArrayList<>(db.getProducts());
-        /*List<String> productsViewList = new ArrayList<>();
-        for (Product product :
-                products) {
-            productsViewList.add(product.getName());
-        }*/
+        products = new ArrayList<>(DBManager.products);
 
-
-
-
-
-        //arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,productsViewList);
-        //listView.setAdapter(arrayAdapter);
 
         //instantiate adapter
         proAdapter = new ProductAdapter(getApplicationContext(), R.layout.list_item, products);

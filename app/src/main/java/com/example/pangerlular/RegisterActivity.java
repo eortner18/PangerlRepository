@@ -18,6 +18,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.InputMismatchException;
+import java.util.regex.Pattern;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
@@ -47,33 +48,31 @@ public class RegisterActivity extends AppCompatActivity {
                     boolean validInputs = true;
 
                     if(password.getText().toString().equals("")){
-                        password.setHintTextColor(Color.RED);
+                        password.setTextColor(Color.RED);
                         validInputs = false;
                     }
                     if(vorname.getText().toString().equals("")){
-                        vorname.setHintTextColor(Color.RED);
+                        vorname.setTextColor(Color.RED);
                         validInputs = false;
                     }
                     if(nachname.getText().toString().equals("")){
-                        nachname.setHintTextColor(Color.RED);
+                        nachname.setTextColor(Color.RED);
                         validInputs = false;
                     }
-                    if(email.getText().toString().equals("") && isValidEmailAddress(email.getText().toString())){
-                        email.setHintTextColor(Color.RED);
+                    if(email.getText().toString().equals("") || !isValidEmailAddress(email.getText().toString())){
+                        email.setTextColor(Color.RED);
                         validInputs = false;
                     }
                     if(strasse.getText().toString().equals("")){
-                        strasse.setHintTextColor(Color.RED);
+                        strasse.setTextColor(Color.RED);
                         validInputs = false;
                     }
                     if(plz.getText().toString().equals("")){
-
-                        plz.setHintTextColor(Color.RED);
+                        plz.setTextColor(Color.RED);
                         validInputs = false;
                     }
                     if(ort.getText().toString().equals("")){
-
-                        ort.setHintTextColor(Color.RED);
+                        ort.setTextColor(Color.RED);
                         validInputs = false;
                     }
 
@@ -86,7 +85,7 @@ public class RegisterActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Registered successful", Toast.LENGTH_LONG).show();
                         startLoginActivity(view);
                     }else{
-                        Toast.makeText(getApplicationContext(), "Missing inputs", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Missing or wrong inputs", Toast.LENGTH_LONG).show();
                     }
                 }catch (NumberFormatException ex){
                     Toast.makeText(getApplicationContext(), "Wrong input for PLZ", Toast.LENGTH_LONG).show();
@@ -109,8 +108,8 @@ public class RegisterActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public int getLastCustomerId(){
         int lastCustomerId = 0;
-        if (db.getCustomers().size() > 1){
-            lastCustomerId = db.getCustomers().stream().mapToInt(Customer::getId).max().getAsInt();
+        if (DBManager.customers.size() > 1){
+            lastCustomerId = DBManager.customers.stream().mapToInt(Customer::getId).max().getAsInt() +1;
         }
         return lastCustomerId;
     }
@@ -132,11 +131,27 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
 
-    public boolean isValidEmailAddress(String email) {
-        String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
-        java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
-        java.util.regex.Matcher m = p.matcher(email);
-        return m.matches();
+    public boolean isValidEmailAddress(String email)
+    {
+        for (Customer customer :
+                DBManager.customers) {
+            if (customer.getMail().equals(email)) {
+                Toast.makeText(getApplicationContext(), "Email is already being used", Toast.LENGTH_LONG).show();
+                return false;
+            }
+        }
+
+
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
+                "[a-zA-Z0-9_+&*-]+)*@" +
+                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+                "A-Z]{2,7}$";
+
+        Pattern pat = Pattern.compile(emailRegex);
+        if (email == null)
+            return false;
+        return pat.matcher(email).matches();
     }
+
 
 }

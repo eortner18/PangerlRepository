@@ -1,39 +1,32 @@
 package com.example.pangerlular;
 
-import android.app.ProgressDialog;
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Build;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.stream.Collectors;
 
-public class ProductAdapter extends ArrayAdapter<Product>
-{
-    private List<Product> productList;
-    private List<Product> arraylist;
+public class CartProductAdapter extends ArrayAdapter<CartProduct>{
+
+    private List<CartProduct> productList;
+    private List<CartProduct> arraylist;
     private  Context context;
-    public ProductAdapter(@NonNull Context context, int resource, List<Product> productList)
+
+    DBManager db = new DBManager();
+    Customer currentCustomer = LoginActivity.currentCustomer;
+    public CartProductAdapter(@NonNull Context context, int resource, List<CartProduct> productList)
     {
         super(context, resource, productList);
         this.productList = productList;
@@ -42,34 +35,52 @@ public class ProductAdapter extends ArrayAdapter<Product>
         this.context = context;
     }
 
+
     @Override
     public int getCount() {
         return productList.size();
     }
 
     @Override
-    public Product getItem(int position) {
+    public CartProduct getItem(int position) {
         return productList.get(position);
     }
 
 
 
+    @SuppressLint("SetTextI18n")
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent)
     {
         int phraseIndex = position;
         if(convertView == null){
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.cart_product_item, parent, false);
         }
 
         ImageView productImage = convertView.findViewById(R.id.product_imageview);
         TextView titleTextView = convertView.findViewById(R.id.name_textview);
-            //set Image Resource
-            new DownloadImageTask(productList.get(position).getProductImageURL(), convertView).start();
+        Button button = convertView.findViewById(R.id.delete);
+        button.setTag(position);
 
-            //set Text
-            titleTextView.setText(productList.get(position).getName());
+        //set Image Resource
+        new DownloadImageTask(productList.get(position).getProduct().getProductImageURL(), convertView).start();
+
+        //set Text
+        titleTextView.setText(productList.get(position).getProduct().getName() + " x " + productList.get(position).getAmount());
+
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int pos = (int) view.getTag();
+                arraylist.remove(pos);
+                productList.remove(pos);
+                CartProductAdapter.this.notifyDataSetChanged();
+
+                db.resetCustomerInDatabase(currentCustomer);
+            }
+        });
 
 
         return convertView;
@@ -84,11 +95,11 @@ public class ProductAdapter extends ArrayAdapter<Product>
             @SuppressWarnings("unchecked")
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                productList = (ArrayList<Product>) results.values;
+                productList = (ArrayList<CartProduct>) results.values;
                 notifyDataSetChanged();
                 clear();
                 for (int i = 0, l = productList.size(); i < l; i++) {
-                    add((Product) productList.get(i));
+                    add((CartProduct) productList.get(i));
                 }
                 notifyDataSetInvalidated();
             }
@@ -97,7 +108,7 @@ public class ProductAdapter extends ArrayAdapter<Product>
             protected FilterResults performFiltering(CharSequence constraint) {
                 productList= arraylist;
                 FilterResults result = new FilterResults();
-                List<Product> filteredArray = new ArrayList<Product>();
+                List<CartProduct> filteredArray = new ArrayList<CartProduct>();
 
 
 
@@ -106,7 +117,7 @@ public class ProductAdapter extends ArrayAdapter<Product>
                 constraint = constraint.toString().toLowerCase();
                 if (constraint != null && constraint.length() > 0) {
                     for (int i = 0; i < productList.size(); i++) {
-                        String dataName = productList.get(i).getName();
+                        String dataName = productList.get(i).getProduct().getName();
                         if (dataName.toLowerCase().startsWith(constraint.toString())) {
                             filteredArray.add(productList.get(i));
                         }
@@ -115,8 +126,8 @@ public class ProductAdapter extends ArrayAdapter<Product>
                     result.count = filteredArray.size();
                 }else{
 
-                        result.values = productList;
-                        result.count = productList.size();
+                    result.values = productList;
+                    result.count = productList.size();
 
                 }
 
@@ -127,20 +138,5 @@ public class ProductAdapter extends ArrayAdapter<Product>
             }
         };
 
-    }
-
-    public void filterCategory(String category) {
-        productList = arraylist;
-        List<Product> filtered = new ArrayList<>();
-        if(!category.equals("Any")){
-            for (Product product :
-                    productList) {
-                if((product.getType()).equalsIgnoreCase(category)){
-                    filtered.add(product);
-                }
-            }
-            productList = filtered;
-        }
-        notifyDataSetChanged();
     }
 }

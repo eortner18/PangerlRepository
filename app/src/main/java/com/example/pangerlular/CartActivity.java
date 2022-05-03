@@ -1,14 +1,19 @@
 package com.example.pangerlular;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -23,36 +28,61 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class CartActivity extends AppCompatActivity {
-
-
+    CartProductAdapter cartProductAdapter;
+    ListView cartProductsListView;
     Customer currentCustomer = LoginActivity.currentCustomer;
-    ListView listView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
-        DBManager db = new DBManager();
 
-        ListView cartProductsListView = findViewById(R.id.cartProductsView);
-        Button button = findViewById(R.id.buttonId);
+
+
+        cartProductsListView = findViewById(R.id.cartProductsView);
+        Button button = findViewById(R.id.bestellen);
         ActionBar actionBar = getSupportActionBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        searchViewListener();
+
 
         //region Objects for testing
-
-        currentCustomer.getCart().addProduct(new CartProduct(3, new Product( "TestProduct1",  "FRUIT",12.0, "")));
-        currentCustomer.getCart().addProduct(new CartProduct(5,new Product("Product2",  "FRUIT",100.0, "")));
-
-        db.addCustomer(currentCustomer);
+        currentCustomer.setCart(new Cart());
+        List<Product> testProducts = DBManager.products;
+        for (int i = DBManager.products.size() -1; i > 6; i--) {
+            currentCustomer.getCart().addProduct(new CartProduct((int) (Math.random() *10) +1,testProducts.get(i)));
+        }
+        DBManager db = new DBManager();
+        db.resetCustomerInDatabase(currentCustomer);
 
         //endregion
 
 
+        cartProductAdapter = new CartProductAdapter(getApplicationContext(), R.layout.cart_product_item, currentCustomer.getCart().getCartProducts());
+        cartProductsListView.setAdapter(cartProductAdapter);
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         button.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                sendEmail(currentCustomer.getCart().getCartProducts(), currentCustomer);
+
+
+                builder.setTitle("Kostenpflichtig")
+                        .setMessage("Wollen Sie alle Produkte aus Ihrem Warenkorb kostenpflichtig bestellen?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        sendEmail(currentCustomer.getCart().getCartProducts(), currentCustomer);
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                }).show();
+
 
             }
         });
@@ -115,9 +145,29 @@ public class CartActivity extends AppCompatActivity {
             message.setSubject("Your Order was successful");
             message.setContent(sendingText, "text/html");
             Transport.send(message);
-            Toast.makeText(getApplicationContext(), "Email sent successfully",Toast.LENGTH_LONG).show();
+
+            Toast.makeText(CartActivity.this, "Bestellbestätigung wurde per Mail zugestellt",Toast.LENGTH_LONG).show();
         }catch(MessagingException e){
             throw new RuntimeException(e);
         }
+    }
+
+
+    public void searchViewListener(){
+        SearchView searchView  = findViewById(R.id.searchBarSearch);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                cartProductAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
     }
 }

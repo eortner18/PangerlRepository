@@ -20,8 +20,8 @@ public class DBManager {
 
     DatabaseReference productReference = database.getReference("products");
     DatabaseReference customerReference = database.getReference("customers");
-    List<Customer> customers = new ArrayList<>();
-    List<Product> products = new ArrayList<>();
+    public static List<Customer> customers = new ArrayList<>();
+    public static List<Product> products = new ArrayList<>();
 
     public DBManager() {
 
@@ -31,7 +31,7 @@ public class DBManager {
     }
 
     public void initProducts(InputStreamReader inputStreamReader) {
-
+        products.clear();
         try {
             CSVReader reader = new CSVReader(inputStreamReader);
             String[] nextLine;
@@ -53,9 +53,7 @@ public class DBManager {
         productReference.setValue(products);
     }
 
-    public List<Product> getProducts() {
-        return products;
-    }
+
 
 
     public void addCustomer(Customer customer) {
@@ -63,15 +61,23 @@ public class DBManager {
         customerReference.setValue(customers);
     }
 
-
-    public List<Customer> getCustomers() {
-        return customers;
+    public void resetCustomerInDatabase(Customer customer){
+        for (int i = 0; i < customers.size(); i++) {
+            if(customers.get(i).getMail().equals(customer.getMail())){
+                customers.set(i, customer);
+            }
+        }
+        customerReference.setValue(customers);
     }
+
+
+
 
     public void productsDatabaseListener(){
         productReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                products.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     products.add(postSnapshot.getValue(Product.class));
                     System.out.println("Product Listener triggered");
@@ -89,7 +95,7 @@ public class DBManager {
         customerReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                customers = new ArrayList<>();
+                customers.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     customers.add(postSnapshot.getValue(Customer.class));
                     System.out.println("Customer Listener triggered");

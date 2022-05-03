@@ -17,17 +17,17 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
+import java.util.Date;
 import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
-    DBManager db = new DBManager();
     public static Customer currentCustomer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loginscreen);
-
+        DBManager db = new DBManager();
 
 
 
@@ -99,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
         for (Customer customer:
-             db.getCustomers()) {
+             DBManager.customers) {
             if(customer.getMail().equals(email)){
                 if(customer.getPassword().equals(hashedPassword)){
                     erg = customer;

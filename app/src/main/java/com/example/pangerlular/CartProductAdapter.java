@@ -60,17 +60,26 @@ public class CartProductAdapter extends ArrayAdapter<CartProduct>{
 
         ImageView productImage = convertView.findViewById(R.id.product_imageview);
         TextView titleTextView = convertView.findViewById(R.id.name_textview);
-        Button button = convertView.findViewById(R.id.delete);
-        button.setTag(position);
+        TextView amount = convertView.findViewById(R.id.amount);
+        TextView priceForProduct = convertView.findViewById(R.id.priceForProduct);
+        Button delete = convertView.findViewById(R.id.delete);
+        delete.setTag(position);
+        Button valueUp = convertView.findViewById(R.id.valueUp);
+        valueUp.setTag(position);
+        Button valueDown = convertView.findViewById(R.id.valueDown);
+        valueDown.setTag(position);
+
 
         //set Image Resource
         new DownloadImageTask(productList.get(position).getProduct().getProductImageURL(), convertView).start();
 
         //set Text
-        titleTextView.setText(productList.get(position).getProduct().getName() + " x " + productList.get(position).getAmount());
+        titleTextView.setText(productList.get(position).getProduct().getName() + " x ");
+        amount.setText(String.valueOf(productList.get(position).getAmount()));
+        priceForProduct.setText((double)Math.round(productList.get(position).getProduct().getPrice() * productList.get(position).getAmount() *100) /100 + " €");
 
 
-        button.setOnClickListener(new View.OnClickListener() {
+        delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int pos = (int) view.getTag();
@@ -79,6 +88,33 @@ public class CartProductAdapter extends ArrayAdapter<CartProduct>{
                 CartProductAdapter.this.notifyDataSetChanged();
 
                 db.resetCustomerInDatabase(currentCustomer);
+            }
+        });
+
+
+
+        valueUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int pos = (int) view.getTag();
+                productList.get(pos).setAmount(productList.get(pos).getAmount()+ 1);
+                CartProductAdapter.this.notifyDataSetChanged();
+
+                db.resetCustomerInDatabase(currentCustomer);
+            }
+        });
+
+
+        valueDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int pos = (int) view.getTag();
+                if(arraylist.get(pos).getAmount() > 1) {
+                    productList.get(pos).setAmount(productList.get(pos).getAmount() - 1);
+                    CartProductAdapter.this.notifyDataSetChanged();
+
+                    db.resetCustomerInDatabase(currentCustomer);
+                }
             }
         });
 

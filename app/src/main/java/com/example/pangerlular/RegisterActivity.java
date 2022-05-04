@@ -108,7 +108,7 @@ public class RegisterActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public int getLastCustomerId(){
         int lastCustomerId = 0;
-        if (DBManager.customers.size() > 1){
+        if (DBManager.customers.size() >= 1){
             lastCustomerId = DBManager.customers.stream().mapToInt(Customer::getId).max().getAsInt() +1;
         }
         return lastCustomerId;

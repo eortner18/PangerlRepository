@@ -1,5 +1,6 @@
 package com.example.pangerlular;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -54,6 +55,7 @@ public class ProductAdapter extends ArrayAdapter<Product>
 
 
 
+    @SuppressLint("SetTextI18n")
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent)
@@ -69,7 +71,7 @@ public class ProductAdapter extends ArrayAdapter<Product>
             new DownloadImageTask(productList.get(position).getProductImageURL(), convertView).start();
 
             //set Text
-            titleTextView.setText(productList.get(position).getName());
+            titleTextView.setText(productList.get(position).getName() + " " + productList.get(position).getPrice() + " €");
 
 
         return convertView;

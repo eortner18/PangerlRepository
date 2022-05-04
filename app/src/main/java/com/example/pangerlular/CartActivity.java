@@ -5,7 +5,9 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.database.DataSetObserver;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -14,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -40,6 +43,7 @@ public class CartActivity extends AppCompatActivity {
 
         cartProductsListView = findViewById(R.id.cartProductsView);
         Button button = findViewById(R.id.bestellen);
+
         ActionBar actionBar = getSupportActionBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         searchViewListener();
@@ -56,9 +60,8 @@ public class CartActivity extends AppCompatActivity {
 
         //endregion
 
-
-        cartProductAdapter = new CartProductAdapter(getApplicationContext(), R.layout.cart_product_item, currentCustomer.getCart().getCartProducts());
-        cartProductsListView.setAdapter(cartProductAdapter);
+        setTotalPrice();
+        setAdapter();
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -68,15 +71,19 @@ public class CartActivity extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                builder.setTitle("Kostenpflichtig")
+                builder.setTitle("Bestellen")
                         .setMessage("Wollen Sie alle Produkte aus Ihrem Warenkorb kostenpflichtig bestellen?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         sendEmail(currentCustomer.getCart().getCartProducts(), currentCustomer);
+                        currentCustomer.setCart(new Cart());
+                        db.resetCustomerInDatabase(currentCustomer);
+
+                        setAdapter();
                     }
                 })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Nein", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.cancel();
@@ -88,6 +95,31 @@ public class CartActivity extends AppCompatActivity {
         });
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+    }
+
+    private void setAdapter() {
+        cartProductAdapter = new CartProductAdapter(getApplicationContext(), R.layout.cart_product_item, currentCustomer.getCart().getCartProducts());
+        cartProductAdapter.registerDataSetObserver(new DataSetObserver() {
+            @Override
+            public void onChanged() {
+                setTotalPrice();
+            }
+        });
+        cartProductsListView.setAdapter(cartProductAdapter);
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void setTotalPrice() {
+        TextView gesamtpreis = findViewById(R.id.gesamtpreis);
+
+        double sum = 0;
+
+        for (CartProduct cartProduct :
+                currentCustomer.getCart().getCartProducts()) {
+            sum+= (double) Math.round(cartProduct.getAmount() * cartProduct.getProduct().getPrice() *100)/100;
+        }
+
+        gesamtpreis.setText(sum + " €");
     }
 
     protected void sendEmail(List<CartProduct> orderedProducts, Customer customer) {
@@ -122,8 +154,8 @@ public class CartActivity extends AppCompatActivity {
             double sum = 0;
             for (CartProduct product:
                  orderedProducts) {
-                sum+= product.getProduct().getPrice();
-                    builder.append("<div>" +product.getAmount() +"x &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;" +product.getProduct().getName() +  "&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;"+product.getProduct().getPrice() +"</div>");
+                sum+= (product.getProduct().getPrice() * product.getAmount());
+                    builder.append("<div>" +product.getAmount() +"x &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;" +product.getProduct().getName() +  "&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;"+(product.getProduct().getPrice() * product.getAmount()) +"</div>");
             }
             builder.append("<br/><p><b>Zahlungsmethode</b><br/>");
             builder.append("Bar vor Ort</p><br/>");
@@ -148,6 +180,7 @@ public class CartActivity extends AppCompatActivity {
 
             Toast.makeText(CartActivity.this, "Bestellbestätigung wurde per Mail zugestellt",Toast.LENGTH_LONG).show();
         }catch(MessagingException e){
+            Toast.makeText(CartActivity.this, "Fehler beim senden der Email. Produkte wurden nicht bestellt", Toast.LENGTH_LONG).show();
             throw new RuntimeException(e);
         }
     }

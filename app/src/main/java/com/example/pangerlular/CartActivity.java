@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.DataSetObserver;
+import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -21,6 +22,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.net.InetAddress;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Properties;
@@ -37,6 +39,7 @@ public class CartActivity extends AppCompatActivity {
     CartProductAdapter cartProductAdapter;
     ListView cartProductsListView;
     Customer currentCustomer = LoginActivity.currentCustomer;
+    DBManager db = new DBManager();
     private static final DecimalFormat df = new DecimalFormat("0.00");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,13 +57,13 @@ public class CartActivity extends AppCompatActivity {
 
 
         //region Objects for testing
-        currentCustomer.setCart(new Cart());
+        /*currentCustomer.setCart(new Cart());
         List<Product> testProducts = DBManager.products;
         for (int i = DBManager.products.size() -1; i > 6; i--) {
             currentCustomer.getCart().addProduct(new CartProduct((int) (Math.random() *10) +1,testProducts.get(i)));
         }
-        DBManager db = new DBManager();
-        db.updateCustomer(currentCustomer);
+
+        db.updateCustomer(currentCustomer);*/
 
         //endregion
 
@@ -81,11 +84,15 @@ public class CartActivity extends AppCompatActivity {
                 .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        sendEmail(currentCustomer.getCart().getCartProducts(), currentCustomer);
-                        currentCustomer.setCart(new Cart());
-                        db.updateCustomer(currentCustomer);
+                        if(isInternetAvailable()) {
+                            sendEmail(currentCustomer.getCart().getCartProducts(), currentCustomer);
+                            currentCustomer.setCart(new Cart());
+                            db.updateCustomer(currentCustomer);
 
-                        setAdapter();
+                            setAdapter();
+                        }else{
+                            Toast.makeText(CartActivity.this, "Keine Internetverbindung. Bestellung wurde abgebrochen", Toast.LENGTH_LONG).show();
+                        }
                     }
                 })
                 .setNegativeButton("Nein", new DialogInterface.OnClickListener() {
@@ -212,6 +219,12 @@ public class CartActivity extends AppCompatActivity {
             Toast.makeText(CartActivity.this, "Fehler beim senden der Email. Produkte wurden nicht bestellt", Toast.LENGTH_LONG).show();
             throw new RuntimeException(e);
         }
+    }
+
+    public boolean isInternetAvailable() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
 
 

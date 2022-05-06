@@ -3,8 +3,10 @@ package com.example.pangerlular;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -13,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.net.InetAddress;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -50,17 +53,21 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                if(isInternetAvailable()) {
+                    String hashedPassword = hash(password.getText().toString());
 
-                String hashedPassword = hash(password.getText().toString());
+                    Customer loggedInCustomer = findCustomerWithPassword(email.getText().toString(), hashedPassword);
 
-                Customer loggedInCustomer = findCustomerWithPassword(email.getText().toString(), hashedPassword);;
-                if(loggedInCustomer != null) {
-                    currentCustomer = loggedInCustomer;
-                    startMainActivity(view);
+                    if (loggedInCustomer != null) {
+                        currentCustomer = loggedInCustomer;
+                        startMainActivity(view);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Email doesn't match password", Toast.LENGTH_LONG).show();
+                        email.setTextColor(Color.RED);
+                        password.setTextColor(Color.RED);
+                    }
                 }else{
-                    Toast.makeText(getApplicationContext(), "Email doesn't match password", Toast.LENGTH_LONG).show();
-                    email.setTextColor(Color.RED);
-                    password.setTextColor(Color.RED);
+                    Toast.makeText(LoginActivity.this, "Keine Internetverbindung", Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -108,6 +115,12 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         return erg;
+    }
+
+    public boolean isInternetAvailable() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
 
 }

@@ -3,8 +3,10 @@ package com.example.pangerlular;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.net.InetAddress;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -45,6 +48,10 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try {
+                    if(!isInternetAvailable()){
+                        Toast.makeText(RegisterActivity.this, "Keine Internetverbindung", Toast.LENGTH_LONG).show();
+                        return;
+                    }
                     boolean validInputs = true;
 
                     if(password.getText().toString().equals("")){
@@ -153,5 +160,9 @@ public class RegisterActivity extends AppCompatActivity {
         return pat.matcher(email).matches();
     }
 
+    public boolean isInternetAvailable() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
+    }
 }

@@ -102,10 +102,6 @@ public class Customer {
         return getPassword().equals(customer.getPassword());
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getPassword());
-    }
 
     @Override
     public String toString() {

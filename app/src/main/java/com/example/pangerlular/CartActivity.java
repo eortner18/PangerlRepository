@@ -6,12 +6,14 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.database.DataSetObserver;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -44,7 +46,7 @@ public class CartActivity extends AppCompatActivity {
 
 
         cartProductsListView = findViewById(R.id.cartProductsView);
-        Button button = findViewById(R.id.bestellen);
+        Button bestellen = findViewById(R.id.bestellen);
 
         ActionBar actionBar = getSupportActionBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -62,12 +64,13 @@ public class CartActivity extends AppCompatActivity {
 
         //endregion
 
+
         setTotalPrice();
         setAdapter();
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        button.setOnClickListener(new View.OnClickListener() {
+        bestellen.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -97,17 +100,30 @@ public class CartActivity extends AppCompatActivity {
         });
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+
+
+
     }
 
     private void setAdapter() {
+        Button bestellen = findViewById(R.id.bestellen);
         cartProductAdapter = new CartProductAdapter(getApplicationContext(), R.layout.cart_product_item, currentCustomer.getCart().getCartProducts());
         cartProductAdapter.registerDataSetObserver(new DataSetObserver() {
             @Override
             public void onChanged() {
                 setTotalPrice();
+                if(currentCustomer.getCart().getCartProducts().size() < 1 ){
+                    bestellen.setEnabled(false);
+                }
             }
         });
         cartProductsListView.setAdapter(cartProductAdapter);
+
+
+
+        if(currentCustomer.getCart().getCartProducts().size() < 1 ){
+            bestellen.setEnabled(false);
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -124,7 +140,7 @@ public class CartActivity extends AppCompatActivity {
         gesamtpreis.setText(df.format(sum) + " €");
     }
 
-    protected void sendEmail(List<CartProduct> orderedProducts, Customer customer) {
+    private void sendEmail(List<CartProduct> orderedProducts, Customer customer) {
         Log.i("Send email", "");
 
         final String username= "pangerl.orders@gmail.com";
@@ -199,7 +215,7 @@ public class CartActivity extends AppCompatActivity {
     }
 
 
-    public void searchViewListener(){
+    private void searchViewListener(){
         SearchView searchView  = findViewById(R.id.searchBarSearch);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

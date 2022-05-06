@@ -35,6 +35,8 @@ public class CartProductAdapter extends ArrayAdapter<CartProduct>{
         this.arraylist = new ArrayList<>();
         this.arraylist.addAll(productList);
         this.context = context;
+
+
     }
 
 
@@ -72,6 +74,9 @@ public class CartProductAdapter extends ArrayAdapter<CartProduct>{
         valueDown.setTag(position);
 
 
+
+
+
         //set Image Resource
         new DownloadImageTask(productList.get(position).getProduct().getProductImageURL(), convertView).start();
 
@@ -90,6 +95,8 @@ public class CartProductAdapter extends ArrayAdapter<CartProduct>{
                 CartProductAdapter.this.notifyDataSetChanged();
 
                 db.updateCustomer(currentCustomer);
+
+
             }
         });
 
@@ -119,6 +126,10 @@ public class CartProductAdapter extends ArrayAdapter<CartProduct>{
                 }
             }
         });
+
+
+
+
 
 
         return convertView;

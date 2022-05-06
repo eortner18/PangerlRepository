@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.DataSetObserver;
 import android.net.ConnectivityManager;
 import android.os.Build;
@@ -17,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -50,6 +52,8 @@ public class CartActivity extends AppCompatActivity {
 
         cartProductsListView = findViewById(R.id.cartProductsView);
         Button bestellen = findViewById(R.id.bestellen);
+
+        ImageButton settings = findViewById(R.id.btnSettings);
 
         ActionBar actionBar = getSupportActionBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -109,7 +113,12 @@ public class CartActivity extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
 
 
-
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startSettingsActivity(view);
+            }
+        });
     }
 
     private void setAdapter() {
@@ -244,5 +253,10 @@ public class CartActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    public void startSettingsActivity(View view) {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
     }
 }

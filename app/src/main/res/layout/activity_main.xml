@@ -64,7 +64,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="#FFFFFF"
-                    android:onClick="btnSettings_OnClick"
+                    android:onClick="startSettingsActivity"
                     android:src="@android:drawable/ic_menu_manage"
                     tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck,ImageContrastCheck" />
 

@@ -70,7 +70,7 @@ public class ProductAdapter extends ArrayAdapter<Product>
         ImageView productImage = convertView.findViewById(R.id.product_imageview);
         TextView titleTextView = convertView.findViewById(R.id.name_textview);
             //set Image Resource
-            new DownloadImageTask(productList.get(position).getProductImageURL(), convertView).start();
+            new DownloadImageTask(productList.get(position).getProductImageURL(), productImage).start();
 
             //set Text
             titleTextView.setText(productList.get(position).getName() + " " + productList.get(position).getPrice() + " €");

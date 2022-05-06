@@ -78,7 +78,7 @@ public class CartProductAdapter extends ArrayAdapter<CartProduct>{
 
 
         //set Image Resource
-        new DownloadImageTask(productList.get(position).getProduct().getProductImageURL(), convertView).start();
+        new DownloadImageTask(productList.get(position).getProduct().getProductImageURL(), productImage).start();
 
         //set Text
         titleTextView.setText(productList.get(position).getProduct().getName() + " x ");
@@ -128,12 +128,10 @@ public class CartProductAdapter extends ArrayAdapter<CartProduct>{
         });
 
 
-
-
-
-
         return convertView;
     }
+
+
 
     @Override
     public Filter getFilter() {

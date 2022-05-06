@@ -16,12 +16,12 @@ class DownloadImageTask extends Thread
 {
     String URL;
     Handler mainHandler= new Handler();
-    View view;
+    ImageView imageView;
 
-    public DownloadImageTask(String URL, View convertView)
+    public DownloadImageTask(String URL, ImageView imageView)
     {
         this.URL = URL;
-        view = convertView;
+        this.imageView = imageView;
     }
 
     @Override
@@ -37,8 +37,7 @@ class DownloadImageTask extends Thread
                 @Override
                 public void run()
                 {
-                    ImageView productImage =view.findViewById(R.id.product_imageview);
-                    productImage.setImageBitmap(bmImage);
+                    imageView.setImageBitmap(bmImage);
                 }
             });
         } catch (IOException e)

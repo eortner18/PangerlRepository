@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -34,6 +35,7 @@ public class ProductAdapter extends ArrayAdapter<Product>
     private List<Product> productList;
     private List<Product> arraylist;
     private  Context context;
+
     public ProductAdapter(@NonNull Context context, int resource, List<Product> productList)
     {
         super(context, resource, productList);

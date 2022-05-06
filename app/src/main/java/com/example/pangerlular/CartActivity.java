@@ -19,6 +19,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Properties;
 
@@ -34,6 +35,7 @@ public class CartActivity extends AppCompatActivity {
     CartProductAdapter cartProductAdapter;
     ListView cartProductsListView;
     Customer currentCustomer = LoginActivity.currentCustomer;
+    private static final DecimalFormat df = new DecimalFormat("0.00");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,10 +118,10 @@ public class CartActivity extends AppCompatActivity {
 
         for (CartProduct cartProduct :
                 currentCustomer.getCart().getCartProducts()) {
-            sum+= (double) Math.round(cartProduct.getAmount() * cartProduct.getProduct().getPrice() *100) /100;
+            sum+= cartProduct.getAmount() * cartProduct.getProduct().getPrice() ;
         }
 
-        gesamtpreis.setText(sum + " €");
+        gesamtpreis.setText(df.format(sum) + " €");
     }
 
     protected void sendEmail(List<CartProduct> orderedProducts, Customer customer) {
@@ -150,20 +152,31 @@ public class CartActivity extends AppCompatActivity {
                     .append("<b><font>E-mail Adresse</font></b><br/>")
                     .append("<font >" + customer.getMail() + "</font></p><br/>")
                     .append("<center><font size=\"+1\"><b>Inhalt der Bestellung</b></font></center><br/>")
-                    .append("<p><b><font>Bestellnummer xxxx</font></b></p>");
+
+
+                    .append("<p><b><font>Bestellnummer "+ String.valueOf(currentCustomer.getId()) + String.valueOf((int) (Math.random() *1000) +1) +"</font></b></p>");
+
             double sum = 0;
+            builder.append("<table cellspacing=\"22\">");
             for (CartProduct product:
                  orderedProducts) {
                 sum+= (product.getProduct().getPrice() * product.getAmount());
-                    builder.append("<div>" +product.getAmount() +"x &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;" +product.getProduct().getName() +  "&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;"+(product.getProduct().getPrice() * product.getAmount()) +"</div>");
+                builder.append("<tr>");
+                    builder.append("<td >" +product.getAmount() +"x </td>" +
+                            "<td >" +product.getProduct().getName() +  "</td>" +
+                            "<td >"+ df.format(product.getProduct().getPrice() * product.getAmount()) +"&euro;</td>");
+                builder.append("</tr>");
             }
+            builder.append("</table>");
+
+
+
+            builder.append("<p text-align:\"right\">Zwischensumme: " +df.format(sum) +" &euro;</p>");
+            builder.append("<p text-align:\"right\"><font size=\"+1\"><b>Summe: " +df.format(sum) +" &euro;</b></font></p><br/>");
+            builder.append("<center><font size=\"+1\"><b>Vielen Dank für Ihre Bestellung</b></font></center>");
+
             builder.append("<br/><p><b>Zahlungsmethode</b><br/>");
             builder.append("Bar vor Ort</p><br/>");
-
-
-            builder.append("<p text-align:\"right\">Zwischensumme :" +sum +" &euro;</p>");
-            builder.append("<p text-align:\"right\"><font size=\"+1\"><b>Summe: " +sum +" &euro;</b></font></p><br/>");
-            builder.append("<center><font size=\"+1\"><b>Vielen Dank für Ihre Bestellung</b></font></center>");
             builder.append("<p><b>Lieferung und Zahlung</b><br/>Lieferung ist nach einer gesonderten Abhol-Email abzuholen bei <br/> Pangerl Obst-Gemüse-Südfrüchte GmbH <br/> Au bei hohen Steg 5 <br/> 4070 Eferding</p>");
             builder.append("<p><b>Haben Sie Fragen zu Ihrer Bestellung?</b><br/>Bei Fragen zur Bestellung, wenden Sie sich bei uns unter<br/> Pangerl Obst-Gemüse-Südfrüchte GmbH <br/> Au bei hohen Steg 5 <br/> 4070 Eferding <br/> Telefon: +43 7272 2453 <br/>E-mail: obst-pangerl.sta.io<br/><b>Öffnungszeiten</b> <br/> Montag bis Freitag von 8:00 bis 17:00 Uhr <br/> Samstag von 8:00 bis 12:00 Uhr</p>");
 

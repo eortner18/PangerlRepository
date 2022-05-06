@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class CartProductAdapter extends ArrayAdapter<CartProduct>{
     private List<CartProduct> productList;
     private List<CartProduct> arraylist;
     private  Context context;
+    private static final DecimalFormat df = new DecimalFormat("0.00");
 
     DBManager db = new DBManager();
     Customer currentCustomer = LoginActivity.currentCustomer;
@@ -76,7 +78,7 @@ public class CartProductAdapter extends ArrayAdapter<CartProduct>{
         //set Text
         titleTextView.setText(productList.get(position).getProduct().getName() + " x ");
         amount.setText(String.valueOf(productList.get(position).getAmount()));
-        priceForProduct.setText((double)Math.round(productList.get(position).getProduct().getPrice() * productList.get(position).getAmount() *100) /100 + " €");
+        priceForProduct.setText(df.format(productList.get(position).getProduct().getPrice() * productList.get(position).getAmount()) + " €");
 
 
         delete.setOnClickListener(new View.OnClickListener() {

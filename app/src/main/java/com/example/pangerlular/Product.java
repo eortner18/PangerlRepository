@@ -5,7 +5,10 @@ import android.renderscript.ScriptIntrinsicYuvToRGB;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class Product {
+import java.io.Serializable;
+
+public class Product implements Serializable
+{
 
     private String name;
     private String type;

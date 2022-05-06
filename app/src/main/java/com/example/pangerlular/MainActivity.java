@@ -5,6 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,6 +25,7 @@ import android.widget.Spinner;
 import com.google.android.material.navigation.NavigationBarView;
 import com.opencsv.CSVReader;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -57,6 +62,19 @@ public class MainActivity extends AppCompatActivity {
         //instantiate adapter
         proAdapter = new ProductAdapter(getApplicationContext(), R.layout.list_item, products);
         listView.setAdapter(proAdapter);
+
+        //Click List-item
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
+            {
+                Product item = (Product) adapterView.getItemAtPosition(position);
+
+                Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+                intent.putExtra("Product", item);
+                startActivity(intent);
+            }
+        });
 
         setUpSpinner();
         searchViewListener();

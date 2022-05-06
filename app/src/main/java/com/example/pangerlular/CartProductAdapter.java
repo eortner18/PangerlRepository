@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Filter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -66,11 +67,11 @@ public class CartProductAdapter extends ArrayAdapter<CartProduct>{
         TextView titleTextView = convertView.findViewById(R.id.name_textview);
         TextView amount = convertView.findViewById(R.id.amount);
         TextView priceForProduct = convertView.findViewById(R.id.priceForProduct);
-        Button delete = convertView.findViewById(R.id.delete);
+        ImageButton delete = convertView.findViewById(R.id.delete);
         delete.setTag(position);
-        Button valueUp = convertView.findViewById(R.id.valueUp);
+        ImageButton valueUp = convertView.findViewById(R.id.valueUp);
         valueUp.setTag(position);
-        Button valueDown = convertView.findViewById(R.id.valueDown);
+        ImageButton valueDown = convertView.findViewById(R.id.valueDown);
         valueDown.setTag(position);
 
 

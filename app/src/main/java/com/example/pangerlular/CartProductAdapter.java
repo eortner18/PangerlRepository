@@ -87,7 +87,7 @@ public class CartProductAdapter extends ArrayAdapter<CartProduct>{
                 productList.remove(pos);
                 CartProductAdapter.this.notifyDataSetChanged();
 
-                db.resetCustomerInDatabase(currentCustomer);
+                db.updateCustomer(currentCustomer);
             }
         });
 
@@ -100,7 +100,7 @@ public class CartProductAdapter extends ArrayAdapter<CartProduct>{
                 productList.get(pos).setAmount(productList.get(pos).getAmount()+ 1);
                 CartProductAdapter.this.notifyDataSetChanged();
 
-                db.resetCustomerInDatabase(currentCustomer);
+                db.updateCustomer(currentCustomer);
             }
         });
 
@@ -113,7 +113,7 @@ public class CartProductAdapter extends ArrayAdapter<CartProduct>{
                     productList.get(pos).setAmount(productList.get(pos).getAmount() - 1);
                     CartProductAdapter.this.notifyDataSetChanged();
 
-                    db.resetCustomerInDatabase(currentCustomer);
+                    db.updateCustomer(currentCustomer);
                 }
             }
         });

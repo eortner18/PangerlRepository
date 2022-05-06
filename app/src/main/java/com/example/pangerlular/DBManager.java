@@ -61,7 +61,7 @@ public class DBManager {
         customerReference.setValue(customers);
     }
 
-    public void resetCustomerInDatabase(Customer customer){
+    public void updateCustomer(Customer customer){
         for (int i = 0; i < customers.size(); i++) {
             if(customers.get(i).getMail().equals(customer.getMail())){
                 customers.set(i, customer);
@@ -70,7 +70,10 @@ public class DBManager {
         customerReference.setValue(customers);
     }
 
-
+    public void deleteCustomer(Customer customer){
+        customers.remove(customer);
+        customerReference.setValue(customers);
+    }
 
 
     public void productsDatabaseListener(){

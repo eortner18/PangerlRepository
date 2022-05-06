@@ -56,7 +56,7 @@ public class CartActivity extends AppCompatActivity {
             currentCustomer.getCart().addProduct(new CartProduct((int) (Math.random() *10) +1,testProducts.get(i)));
         }
         DBManager db = new DBManager();
-        db.resetCustomerInDatabase(currentCustomer);
+        db.updateCustomer(currentCustomer);
 
         //endregion
 
@@ -78,7 +78,7 @@ public class CartActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         sendEmail(currentCustomer.getCart().getCartProducts(), currentCustomer);
                         currentCustomer.setCart(new Cart());
-                        db.resetCustomerInDatabase(currentCustomer);
+                        db.updateCustomer(currentCustomer);
 
                         setAdapter();
                     }
@@ -116,7 +116,7 @@ public class CartActivity extends AppCompatActivity {
 
         for (CartProduct cartProduct :
                 currentCustomer.getCart().getCartProducts()) {
-            sum+= (double) Math.round(cartProduct.getAmount() * cartProduct.getProduct().getPrice() *100)/100;
+            sum+= (double) Math.round(cartProduct.getAmount() * cartProduct.getProduct().getPrice() *100) /100;
         }
 
         gesamtpreis.setText(sum + " €");

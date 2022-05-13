@@ -10,7 +10,7 @@
     android:textAlignment="center"
     tools:context=".MainActivity">
 
-    <ScrollView
+
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -103,23 +103,21 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="581dp"
-                android:orientation="vertical">
-
-                <ListView
-                    android:id="@+id/ListViewProducts"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dip"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginRight="10dip"
-                    android:layout_marginBottom="20dip" />
-            </LinearLayout>
-
 
         </LinearLayout>
-    </ScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="581dp"
+        android:orientation="vertical">
+
+        <ListView
+            android:id="@+id/ListViewProducts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="10dip"
+            android:layout_marginBottom="20dip" />
+    </LinearLayout>
 
 </LinearLayout>

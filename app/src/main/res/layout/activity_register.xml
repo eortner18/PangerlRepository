@@ -21,7 +21,6 @@
                 android:layout_marginLeft="10dip"
                 android:layout_marginTop="20dip"
                 android:layout_marginRight="10dip"
-                android:layout_marginBottom="40dip"
                 android:text="Pangerl Registrierung"
                 android:textAlignment="center"
                 android:textSize="34sp" />
@@ -31,9 +30,9 @@
                 android:layout_width="143dp"
                 android:layout_height="51dp"
                 android:layout_marginStart="31dp"
-                android:layout_marginTop="37dp"
+                android:layout_marginTop="30dp"
                 android:ems="10"
-                android:hint="vorname"
+                android:hint="Vorname"
                 android:inputType="textPersonName" />
 
             <EditText
@@ -43,7 +42,7 @@
                 android:layout_marginStart="31dp"
                 android:layout_marginTop="30dp"
                 android:ems="10"
-                android:hint="nachname"
+                android:hint="Nachname"
                 android:inputType="textPersonName"
                 app:layout_constraintStart_toEndOf="@+id/txt_vorname"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -55,7 +54,7 @@
                 android:layout_marginStart="31dp"
                 android:layout_marginTop="19dp"
                 android:ems="10"
-                android:hint="strasse + nr"
+                android:hint="Strasse + Nr"
                 android:inputType="textPersonName"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_nachname" />
@@ -67,7 +66,7 @@
                 android:layout_marginStart="31dp"
                 android:layout_marginTop="19dp"
                 android:ems="10"
-                android:hint="plz"
+                android:hint="Plz"
                 android:inputType="textPersonName"
                 app:layout_constraintStart_toEndOf="@+id/txt_strasse"
                 app:layout_constraintTop_toBottomOf="@+id/txt_nachname" />
@@ -79,7 +78,7 @@
                 android:layout_marginStart="31dp"
                 android:layout_marginTop="13dp"
                 android:ems="10"
-                android:hint="ort"
+                android:hint="Ort"
                 android:inputType="textPersonName"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_strasse" />
@@ -91,10 +90,22 @@
                 android:layout_marginStart="31dp"
                 android:layout_marginTop="11dp"
                 android:ems="10"
-                android:hint="email"
+                android:hint="E-mail"
                 android:inputType="textPersonName"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_ort" />
+
+            <EditText
+                android:id="@+id/txt_password"
+                android:layout_width="215dp"
+                android:layout_height="58dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:hint="Passwort"
+                android:inputType="textPassword"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_email" />
 
             <Button
                 android:id="@+id/btn_register"
@@ -106,18 +117,6 @@
                 android:text="Registrieren"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
-
-            <EditText
-                android:id="@+id/txt_password"
-                android:layout_width="215dp"
-                android:layout_height="58dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="16dp"
-                android:ems="10"
-                android:hint="password"
-                android:inputType="textPassword"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txt_email" />
 
         </LinearLayout>
     </ScrollView>

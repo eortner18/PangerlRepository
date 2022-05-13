@@ -45,8 +45,10 @@ public class CartActivity extends AppCompatActivity {
     private static final DecimalFormat df = new DecimalFormat("0.00");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cart);
+
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_cart);
+
 
 
 
@@ -92,7 +94,7 @@ public class CartActivity extends AppCompatActivity {
                             sendEmail(currentCustomer.getCart().getCartProducts(), currentCustomer);
                             currentCustomer.setCart(new Cart());
                             db.updateCustomer(currentCustomer);
-
+                            setTotalPrice();
                             setAdapter();
                         }else{
                             Toast.makeText(CartActivity.this, "Keine Internetverbindung. Bestellung wurde abgebrochen", Toast.LENGTH_LONG).show();

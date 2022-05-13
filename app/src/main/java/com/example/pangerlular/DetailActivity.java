@@ -12,6 +12,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -99,5 +100,36 @@ public class DetailActivity extends AppCompatActivity
                 }
             }
         });
+
+        ImageButton cartImgButton = findViewById(R.id.ShoppingCartImageButton);
+        cartImgButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                startCartActivity(view);
+            }
+        });
+
+        ImageButton settImgButton = findViewById(R.id.btnSettings);
+        settImgButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                startSettingsActivity(view);
+            }
+        });
     }
+
+    public void startCartActivity(View view) {
+        Intent intent = new Intent(this, CartActivity.class);
+        startActivity(intent);
+    }
+
+
+    public void startSettingsActivity(View view) {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+    }
+
 }

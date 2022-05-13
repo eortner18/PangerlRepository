@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
@@ -76,6 +77,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         TextView link = findViewById(R.id.linkView);
+        link.setPaintFlags(link.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
         link.setOnClickListener(new View.OnClickListener()
         {
             @Override

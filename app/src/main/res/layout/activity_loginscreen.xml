@@ -115,12 +115,15 @@
                     android:id="@+id/linkView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="https://online.wkooe.at/agb-shop"
                     android:layout_marginLeft="50dp"
-                    android:layout_marginRight="50dp"
                     android:layout_marginTop="100dp"
+                    android:layout_marginRight="50dp"
+                    android:clickable="true"
+                    android:text="Mit dem Registrieren oder Einloggen stimmen Sie unserern AGBs zu."
                     android:textAlignment="center"
-                    android:clickable="true"/>
+                    android:textAllCaps="false"
+                    android:textColor="#2196F3"
+                    android:textIsSelectable="false" />
             </LinearLayout>
 
         </LinearLayout>

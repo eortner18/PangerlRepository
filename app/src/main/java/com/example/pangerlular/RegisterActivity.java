@@ -29,6 +29,7 @@ import javax.mail.internet.InternetAddress;
 public class RegisterActivity extends AppCompatActivity {
 
     DBManager db = new DBManager();
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,43 +48,68 @@ public class RegisterActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                password.setTextColor(Color.BLACK);
+                vorname.setTextColor(Color.BLACK);
+                nachname.setTextColor(Color.BLACK);
+                email.setTextColor(Color.BLACK);
+                strasse.setTextColor(Color.BLACK);
+                plz.setTextColor(Color.BLACK);
+                ort.setTextColor(Color.BLACK);
+
+                password.setHintTextColor(Color.GRAY);
+                vorname.setHintTextColor(Color.GRAY);
+                nachname.setHintTextColor(Color.GRAY);
+                email.setHintTextColor(Color.GRAY);
+                strasse.setHintTextColor(Color.GRAY);
+                plz.setHintTextColor(Color.GRAY);
+                ort.setHintTextColor(Color.GRAY);
+
+
                 try {
-                    if(!isInternetAvailable()){
+                    if (!isInternetAvailable()) {
                         Toast.makeText(RegisterActivity.this, "Keine Internetverbindung", Toast.LENGTH_LONG).show();
                         return;
                     }
                     boolean validInputs = true;
 
-                    if(password.getText().toString().equals("")){
+                    if (password.getText().toString().equals("") || !isValidPassword(password.getText().toString())) {
+                        Toast.makeText(getApplicationContext(), "Password must have more than 8 characters and contain one special, one uppercase, one lowercase as well as one numeric character", Toast.LENGTH_LONG).show();
                         password.setTextColor(Color.RED);
+                        password.setHintTextColor(Color.RED);
                         validInputs = false;
                     }
-                    if(vorname.getText().toString().equals("")){
+                    if (vorname.getText().toString().equals("")) {
                         vorname.setTextColor(Color.RED);
+                        vorname.setHintTextColor(Color.RED);
                         validInputs = false;
                     }
-                    if(nachname.getText().toString().equals("")){
+                    if (nachname.getText().toString().equals("")) {
                         nachname.setTextColor(Color.RED);
+                        nachname.setHintTextColor(Color.RED);
                         validInputs = false;
                     }
-                    if(email.getText().toString().equals("") || !isValidEmailAddress(email.getText().toString())){
+                    if (email.getText().toString().equals("") || !isValidEmailAddress(email.getText().toString())) {
                         email.setTextColor(Color.RED);
+                        email.setHintTextColor(Color.RED);
                         validInputs = false;
                     }
-                    if(strasse.getText().toString().equals("")){
+                    if (strasse.getText().toString().equals("")) {
                         strasse.setTextColor(Color.RED);
+                        strasse.setHintTextColor(Color.RED);
                         validInputs = false;
                     }
-                    if(plz.getText().toString().equals("")){
+                    if (plz.getText().toString().equals("")) {
                         plz.setTextColor(Color.RED);
+                        plz.setHintTextColor(Color.RED);
                         validInputs = false;
                     }
-                    if(ort.getText().toString().equals("")){
+                    if (ort.getText().toString().equals("")) {
                         ort.setTextColor(Color.RED);
+                        ort.setHintTextColor(Color.RED);
                         validInputs = false;
                     }
 
-                    if(validInputs) {
+                    if (validInputs) {
                         int lastCustomerId = getLastCustomerId();
                         String passwordHash = hash(password.getText().toString());
 
@@ -91,10 +117,10 @@ public class RegisterActivity extends AppCompatActivity {
                                 new Address(strasse.getText().toString(), Integer.parseInt(plz.getText().toString()), ort.getText().toString()), new Cart()));
                         Toast.makeText(getApplicationContext(), "Registered successful", Toast.LENGTH_LONG).show();
                         startLoginActivity(view);
-                    }else{
+                    } else {
                         Toast.makeText(getApplicationContext(), "Missing or wrong inputs", Toast.LENGTH_LONG).show();
                     }
-                }catch (NumberFormatException ex){
+                } catch (NumberFormatException ex) {
                     Toast.makeText(getApplicationContext(), "Wrong input for PLZ", Toast.LENGTH_LONG).show();
                     plz.setTextColor(Color.RED);
                 }
@@ -106,24 +132,23 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
 
-
     public void startLoginActivity(View view) {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public int getLastCustomerId(){
+    public int getLastCustomerId() {
         int lastCustomerId = 0;
-        if (DBManager.customers.size() >= 1){
-            lastCustomerId = DBManager.customers.stream().mapToInt(Customer::getId).max().getAsInt() +1;
+        if (DBManager.customers.size() >= 1) {
+            lastCustomerId = DBManager.customers.stream().mapToInt(Customer::getId).max().getAsInt() + 1;
         }
         return lastCustomerId;
     }
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public String hash(String hashString){
+    public String hash(String hashString) {
 
         MessageDigest digest = null;
         try {
@@ -138,8 +163,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
 
-    public boolean isValidEmailAddress(String email)
-    {
+    public boolean isValidEmailAddress(String email) {
         for (Customer customer :
                 DBManager.customers) {
             if (customer.getMail().equals(email)) {
@@ -149,7 +173,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
 
-        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." +
                 "[a-zA-Z0-9_+&*-]+)*@" +
                 "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
                 "A-Z]{2,7}$";
@@ -160,9 +184,17 @@ public class RegisterActivity extends AppCompatActivity {
         return pat.matcher(email).matches();
     }
 
+    public boolean isValidPassword(String password) {
+        String passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,}$";
+        Pattern pat = Pattern.compile(passwordRegex);
+        return pat.matcher(password).matches();
+    }
+
     public boolean isInternetAvailable() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
         return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
+
+
 }

@@ -13,7 +13,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
@@ -25,94 +25,202 @@
                 android:textAlignment="center"
                 android:textSize="34sp" />
 
-            <EditText
-                android:id="@+id/txt_vorname"
-                android:layout_width="143dp"
-                android:layout_height="51dp"
-                android:layout_marginStart="31dp"
-                android:layout_marginTop="30dp"
-                android:ems="10"
-                android:hint="Vorname"
-                android:inputType="textPersonName" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/txt_nachname"
-                android:layout_width="181dp"
-                android:layout_height="63dp"
-                android:layout_marginStart="31dp"
-                android:layout_marginTop="30dp"
-                android:ems="10"
-                android:hint="Nachname"
-                android:inputType="textPersonName"
-                app:layout_constraintStart_toEndOf="@+id/txt_vorname"
-                app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
 
-            <EditText
-                android:id="@+id/txt_strasse"
-                android:layout_width="216dp"
-                android:layout_height="66dp"
-                android:layout_marginStart="31dp"
-                android:layout_marginTop="19dp"
-                android:ems="10"
-                android:hint="Strasse + Nr"
-                android:inputType="textPersonName"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txt_nachname" />
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_weight="0"
+                    android:text="Vorname:" />
 
-            <EditText
-                android:id="@+id/txt_plz"
-                android:layout_width="125dp"
-                android:layout_height="67dp"
-                android:layout_marginStart="31dp"
-                android:layout_marginTop="19dp"
-                android:ems="10"
-                android:hint="Plz"
-                android:inputType="textPersonName"
-                app:layout_constraintStart_toEndOf="@+id/txt_strasse"
-                app:layout_constraintTop_toBottomOf="@+id/txt_nachname" />
+                <EditText
+                    android:id="@+id/txt_vorname"
+                    android:layout_width="143dp"
+                    android:layout_height="51dp"
+                    android:layout_marginStart="31dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Vorname"
+                    android:inputType="textPersonName" />
+            </LinearLayout>
 
-            <EditText
-                android:id="@+id/txt_ort"
-                android:layout_width="219dp"
-                android:layout_height="67dp"
-                android:layout_marginStart="31dp"
-                android:layout_marginTop="13dp"
-                android:ems="10"
-                android:hint="Ort"
-                android:inputType="textPersonName"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txt_strasse" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/txt_email"
-                android:layout_width="214dp"
-                android:layout_height="77dp"
-                android:layout_marginStart="31dp"
-                android:layout_marginTop="11dp"
-                android:ems="10"
-                android:hint="E-mail"
-                android:inputType="textPersonName"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txt_ort" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="0"
+                    android:text="Nachname" />
 
-            <EditText
-                android:id="@+id/txt_password"
-                android:layout_width="215dp"
-                android:layout_height="58dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="16dp"
-                android:ems="10"
-                android:hint="Passwort"
-                android:inputType="textPassword"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txt_email" />
+                <EditText
+                    android:id="@+id/txt_nachname"
+                    android:layout_width="181dp"
+                    android:layout_height="63dp"
+                    android:layout_marginStart="31dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Nachname"
+                    android:inputType="textPersonName" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="19dp"
+                    android:layout_weight="0"
+                    android:layout_marginLeft="10dp"
+                    android:text="Strasse + Nr" />
+
+                <EditText
+                    android:id="@+id/txt_strasse"
+                    android:layout_width="216dp"
+                    android:layout_height="66dp"
+                    android:layout_marginStart="31dp"
+                    android:layout_marginTop="19dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+
+                    android:hint="Strasse + Nr"
+                    android:inputType="textPersonName"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_nachname" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="19dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="0"
+                    android:text="Plz" />
+
+                <EditText
+                    android:id="@+id/txt_plz"
+                    android:layout_width="125dp"
+                    android:layout_height="67dp"
+                    android:layout_marginStart="31dp"
+                    android:layout_marginTop="19dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Plz"
+                    android:inputType="textPersonName"
+                    app:layout_constraintStart_toEndOf="@+id/txt_strasse"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_nachname" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="0"
+                    android:text="Ort" />
+
+                <EditText
+                    android:id="@+id/txt_ort"
+                    android:layout_width="219dp"
+                    android:layout_height="67dp"
+                    android:layout_marginStart="31dp"
+                    android:layout_marginTop="13dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Ort"
+                    android:inputType="textPersonName"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_strasse" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="0"
+                    android:text="Email" />
+
+                <EditText
+                    android:id="@+id/txt_email"
+                    android:layout_width="214dp"
+                    android:layout_height="77dp"
+                    android:layout_marginStart="31dp"
+                    android:layout_marginTop="11dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="E-mail"
+                    android:inputType="textPersonName"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_ort" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="0"
+                    android:text="Passwort" />
+
+                <EditText
+                    android:id="@+id/txt_password"
+                    android:layout_width="215dp"
+                    android:layout_height="58dp"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Passwort"
+                    android:inputType="textPassword"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_email" />
+            </LinearLayout>
 
             <Button
                 android:id="@+id/btn_register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="31dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="239dp"
                 android:text="Registrieren"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -120,7 +228,6 @@
 
         </LinearLayout>
     </ScrollView>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

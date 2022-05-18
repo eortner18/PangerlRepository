@@ -32,6 +32,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import com.opencsv.CSVReader;
@@ -58,6 +60,13 @@ public class MainActivity extends AppCompatActivity {
         listView = findViewById(R.id.ListViewProducts);
 
         products = new ArrayList<>(DBManager.products);
+
+        Collections.sort(products, new Comparator<Product>() {
+            @Override
+            public int compare(Product o1, Product o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
 
 
         //instantiate adapter

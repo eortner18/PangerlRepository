@@ -18,6 +18,8 @@ import androidx.annotation.Nullable;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class CartProductAdapter extends ArrayAdapter<CartProduct>{
@@ -36,6 +38,7 @@ public class CartProductAdapter extends ArrayAdapter<CartProduct>{
         this.arraylist = new ArrayList<>();
         this.arraylist.addAll(productList);
         this.context = context;
+
 
 
     }
